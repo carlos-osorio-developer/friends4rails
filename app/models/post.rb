@@ -7,8 +7,8 @@ class Post < ApplicationRecord
   validates :user_id, presence: true
 
   scope :timeline, lambda { |user|
-    where(user_id: user.id)
-    .or(where(user_id: User.accepted(user).ids))  
+    where(user_id: Friendship.accepted_friends_ids(user))
+    .or(where(user_id: user.id))
     .order(created_at: :desc)
   }
 end
