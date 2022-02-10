@@ -15,4 +15,9 @@ class User < ApplicationRecord
     where.not(id: user.friends.ids)
     .where.not(id: user.id)
   }
+
+  scope :accepted, lambda { |user|
+    joins(:friendships)
+    .where(friendships: { accepted: true })
+  }
 end

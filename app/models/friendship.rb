@@ -12,5 +12,5 @@ class Friendship < ApplicationRecord
   scope :pending, lambda { |user|
     joins(:user)
     .where(:friend_id => user.id, :accepted => false)
-  }  
+  }    
 end
