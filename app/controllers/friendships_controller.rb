@@ -1,7 +1,7 @@
 class FriendshipsController < ApplicationController
 
   def index
-    @friendships = Friendship.all
+    @friendships = Friendship.pending
   end
 
   def show
@@ -14,7 +14,7 @@ class FriendshipsController < ApplicationController
 
   def create
     @friendship = Friendship.new
-    @friendship.user_id = params[:user_id]
+    @friendship.user_id = current_user.id
     @friendship.friend_id = params[:friend_id]
     @friendship.accepted = false
 

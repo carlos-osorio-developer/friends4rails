@@ -8,4 +8,9 @@ class Friendship < ApplicationRecord
   validates :accepted, inclusion: { in: [true, false] }
   
   validates :user_id, uniqueness: { scope: :friend_id, message: "is already a friend" }
+
+  scope :pending, lambda { |user|
+    joins(:user)
+    .where(:friend_id => user.id, :accepted => false)
+  }  
 end
