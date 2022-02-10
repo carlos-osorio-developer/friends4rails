@@ -10,4 +10,9 @@ class User < ApplicationRecord
 
   has_many :friendships
   has_many :friends, through: :friendships
+
+  scope :available, lambda { |user|  
+    where.not(id: user.friends.ids)
+    .where.not(id: user.id)
+  }
 end
