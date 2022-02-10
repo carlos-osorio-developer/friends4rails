@@ -16,6 +16,7 @@ class FriendshipsController < ApplicationController
     @friendship = Friendship.new
     @friendship.user_id = params[:user_id]
     @friendship.friend_id = params[:friend_id]
+    @friendship.accepted = false
 
     if @friendship.save
       render json: @friendship, status: :created, location: @friendship
