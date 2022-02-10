@@ -33,11 +33,12 @@ class FriendshipsController < ApplicationController
   def accept 
     @friendship = Friendship.find(params[:id])
     @friendship.accepted = true
+    @user
     if @friendship.save            
-      flash.now[:notice] = "Friendship accepted!"  
+      redirect_to posts_path, notice: "Friendship accepted!"      
     else
-      flash.now[:alert] = "Something went wrong!"
-    end
+      redirect_to posts_path, alert: "Error accepting friendship!"
+    end    
   end
 
   private
