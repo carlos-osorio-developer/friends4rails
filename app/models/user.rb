@@ -5,11 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts, dependent: :destroy
-
-  validates :email, presence: true, uniqueness: true
-
+  has_many :comments, dependent: :destroy  
   has_many :friendships
   has_many :friends, through: :friendships
+
+  validates :email, presence: true, uniqueness: true
 
   scope :available, lambda { |user|  
     where.not(id: user.friends.ids)
