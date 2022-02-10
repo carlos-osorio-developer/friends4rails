@@ -1,0 +1,9 @@
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<% if friendships=Friendship.pending(current_user) %>
+  <% friendships.each do |invitation| %>
+    <li><a href="/users/<%= invitation.user.name %>"><%= invitation.user.name %></a></li>        
+  <% end %>
+<% else %>
+  <li><a href="#">There are no pending invitations</a></li>
+<% end %>
+</ul>
