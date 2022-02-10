@@ -24,15 +24,25 @@ class FriendshipsController < ApplicationController
       render json: @friendship.errors, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
-    @friendship = Friendship.find(params[:id])
+    @friendship = Friendship.find(user_id: current_user.id, friend_id: params[:friend_id])
     @friendship.destroy
+  end
+
+  def accept 
+    @friendship = Friendship.find(params[:id])
+    @friendship.accepted = true
+    if @friendship.save            
+      flash.now[:notice] = "Friendship accepted!"  
+    else
+      flash.now[:alert] = "Something went wrong!"
+    end
   end
 
   private
 
   def friendship_params
-    params.require(:friendship).permit(:user_id, :friend_id)
+    params.require(:friendship).permit(:id, :friend_id)
   end
 end
