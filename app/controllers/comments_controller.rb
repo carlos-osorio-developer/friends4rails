@@ -1,25 +1,15 @@
-class CommentsController < ApplicationController  
-
-  # GET /comments/new
-  def new
-    @comment = Comment.new
-  end  
-
-  # Comment /comments or /comments.json
+class CommentsController < ApplicationController   
   def create
     @comment = Comment.new(comment_params)
+    @comment.post_id = params[:post_id]
     @comment.user_id = current_user.id
 
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.save
+      redirect_to posts_path, notice: 'Comment was successfully created.'
+    else
+      redirect_to posts_path, alert: @comment.errors.full_messages.join('. ').to_s
     end
-  end  
+  end
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
@@ -32,13 +22,7 @@ class CommentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_Comment
-      @comment = Comment.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def comment_params
-      params.require(:Comment).permit(:body, :post_id)
-    end
+  def comment_params
+    params.permit(:body, :post_id)
+  end
 end
