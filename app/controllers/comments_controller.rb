@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController   
+class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.post_id = params[:post_id]
@@ -16,12 +16,13 @@ class CommentsController < ApplicationController
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
   def comment_params
     params.require(:comment).permit(:body, :post_id)
   end
