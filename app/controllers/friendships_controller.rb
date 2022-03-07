@@ -1,5 +1,4 @@
 class FriendshipsController < ApplicationController
-
   def index
     @friendships = Friendship.pending
   end
@@ -24,21 +23,20 @@ class FriendshipsController < ApplicationController
       render json: @friendship.errors, status: :unprocessable_entity
     end
   end
-  
+
   def destroy
     @friendship = Friendship.find(user_id: current_user.id, friend_id: params[:friend_id])
     @friendship.destroy
   end
 
-  def accept 
+  def accept
     @friendship = Friendship.find(params[:id])
     @friendship.accepted = true
-    @user
-    if @friendship.save            
-      redirect_to posts_path, notice: "Friendship accepted!"      
+    if @friendship.save
+      redirect_to posts_path, notice: 'Friendship accepted!'
     else
-      redirect_to posts_path, alert: "Error accepting friendship!"
-    end    
+      redirect_to posts_path, alert: 'Error accepting friendship!'
+    end
   end
 
   private

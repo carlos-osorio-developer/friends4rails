@@ -12,104 +12,103 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/posts", type: :request do
-  
+RSpec.describe '/posts', type: :request do
   # Post. As you add validations to Post, be sure to
-  # adjust the attributes here as well.  
+  # adjust the attributes here as well.
   let!(:user) { create(:user) }
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     {
-      title: "New title",
-      body: "New body for post",
+      title: 'New title',
+      body: 'New body for post',
       user_id: user.id
     }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     {
       title: nil,
       body: nil,
       user_id: nil
     }
-  }
+  end
 
   before :each do
     login_as(user)
   end
 
-  describe "GET /index" do
-    it "renders a successful response" do
+  describe 'GET /index' do
+    it 'renders a successful response' do
       Post.create! valid_attributes
       get posts_url
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
+  describe 'GET /show' do
+    it 'renders a successful response' do
       post = Post.create! valid_attributes
       get post_url(post)
       expect(response).to be_successful
     end
   end
 
-  describe "GET /new" do
-    it "renders a successful response" do
+  describe 'GET /new' do
+    it 'renders a successful response' do
       get new_post_url
       expect(response).to be_successful
     end
   end
 
-  describe "GET /edit" do
-    it "render a successful response" do
+  describe 'GET /edit' do
+    it 'render a successful response' do
       post = Post.create! valid_attributes
       get edit_post_url(post)
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Post" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Post' do
+        expect do
           post posts_url, params: { post: valid_attributes }
-        }.to change(Post, :count).by(1)
+        end.to change(Post, :count).by(1)
       end
 
-      it "redirects to the created post" do
+      it 'redirects to the created post' do
         post posts_url, params: { post: valid_attributes }
         expect(response).to redirect_to(post_url(Post.last))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Post" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new Post' do
+        expect do
           post posts_url, params: { post: invalid_attributes }
-        }.to change(Post, :count).by(0)
+        end.to change(Post, :count).by(0)
       end
 
-      it "returns an error status" do
+      it 'returns an error status' do
         post posts_url, params: { post: invalid_attributes }
         expect(response).to have_http_status(422)
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        { title: "New title", body: "New body for post", user_id: user.id }
-      }
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        { title: 'New title', body: 'New body for post', user_id: user.id }
+      end
 
-      it "updates the requested post" do
+      it 'updates the requested post' do
         post = Post.create! valid_attributes
         patch post_url(post), params: { post: new_attributes }
         post.reload
-        expect(post.title).to eq("New title")
+        expect(post.title).to eq('New title')
       end
 
-      it "redirects to the post" do
+      it 'redirects to the post' do
         post = Post.create! valid_attributes
         patch post_url(post), params: { post: new_attributes }
         post.reload
@@ -117,8 +116,8 @@ RSpec.describe "/posts", type: :request do
       end
     end
 
-    context "with invalid parameters" do
-      it "returns an error status code" do
+    context 'with invalid parameters' do
+      it 'returns an error status code' do
         post = Post.create! valid_attributes
         patch post_url(post), params: { post: invalid_attributes }
         expect(response).to have_http_status(422)
@@ -126,15 +125,15 @@ RSpec.describe "/posts", type: :request do
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested post" do
+  describe 'DELETE /destroy' do
+    it 'destroys the requested post' do
       post = Post.create! valid_attributes
-      expect {
+      expect do
         delete post_url(post)
-      }.to change(Post, :count).by(-1)
+      end.to change(Post, :count).by(-1)
     end
 
-    it "redirects to the posts list" do      
+    it 'redirects to the posts list' do
       post = Post.create! valid_attributes
       delete post_url(post)
       expect(response).to redirect_to(posts_url)

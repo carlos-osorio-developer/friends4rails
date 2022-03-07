@@ -8,7 +8,7 @@ class Post < ApplicationRecord
 
   scope :timeline, lambda { |user|
     where(user_id: Friendship.accepted_friends_ids(user))
-    .or(where(user_id: user.id))
-    .order(created_at: :desc)
+      .or(where(user_id: user.id))
+      .order(created_at: :desc)
   }
 end
