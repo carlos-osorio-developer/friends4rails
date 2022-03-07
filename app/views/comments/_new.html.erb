@@ -1,0 +1,5 @@
+<%= form_with model: Comment.new, url: "posts/#{post.id}/comments" do |f| %>  
+  <%= f.label :body, "Comment" %>
+  <%= f.text_area :body, :class => "comment_body" %>
+  <%= f.submit %>
+<% end %>

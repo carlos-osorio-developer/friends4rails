@@ -1,0 +1,13 @@
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<% friendships=Friendship.pending(current_user) %>
+<% if !friendships.empty? %>
+  <% friendships.each do |invitation| %>  
+    <li>
+      <span><%= invitation.user.name %></span>
+      <%= link_to 'Accept', accept_friendship_path(id: invitation.id), method: :patch  %>
+    </li>
+  <% end %>
+<% else %>
+  <li>There are no pending invitations</li>
+<% end %>
+</ul>
